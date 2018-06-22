@@ -20,9 +20,17 @@ export default class Anchors extends React.PureComponent {
 
   getSVG(id) {
     this.SVGs || (this.SVGs = {})
+    var { anchorSVG } = this.props
 
     if (this.SVGs[id]) {
       return this.SVGs[id]
+    } else if (anchorSVG[id]) {
+      let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+       ${anchorSVG[id]}
+      </svg>`
+
+      this.SVGs[id] = svg
+      return svg
     } else {
       let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
        ${SVGs[id]}
@@ -81,9 +89,11 @@ export default class Anchors extends React.PureComponent {
 Anchors.propTypes = {
   categories: PropTypes.array,
   onAnchorClick: PropTypes.func,
+  anchorSVG: PropTypes.object,
 }
 
 Anchors.defaultProps = {
   categories: [],
   onAnchorClick: () => {},
+  anchorSVG: {},
 }
