@@ -30,24 +30,25 @@ const I18N = {
   },
 }
 
-const toSVG = (size, svg) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
-  ${svg}
-  </svg>`
+const toSVG = (key) => () =>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    dangerouslySetInnerHTML={ { __html: SVGs[key] } }
+  ></svg>
 
 const ICON_FNS = {
   categories: {
-    search: (size) => toSVG(size, SVGs['search']),
-    recent: (size) => toSVG(size, SVGs['recent']),
-    people: (size) => toSVG(size, SVGs['people']),
-    nature: (size) => toSVG(size, SVGs['nature']),
-    foods: (size) => toSVG(size, SVGs['foods']),
-    activity: (size) => toSVG(size, SVGs['activity']),
-    places: (size) => toSVG(size, SVGs['places']),
-    objects: (size) => toSVG(size, SVGs['objects']),
-    symbols: (size) => toSVG(size, SVGs['symbols']),
-    flags: (size) => toSVG(size, SVGs['flags']),
-    custom: (size) => toSVG(size, SVGs['custom']),
+    recent: toSVG('recent'),
+    people: toSVG('people'),
+    nature: toSVG('nature'),
+    foods: toSVG('foods'),
+    activity: toSVG('activity'),
+    places: toSVG('places'),
+    objects: toSVG('objects'),
+    symbols: toSVG('symbols'),
+    flags: toSVG('flags'),
+    custom: toSVG('custom'),
   },
 }
 

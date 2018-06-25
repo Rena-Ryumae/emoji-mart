@@ -24,7 +24,7 @@ export default class Anchors extends React.PureComponent {
   }
 
   render() {
-    var { categories, onAnchorClick, color, i18n, iconFns } = this.props,
+    var { categories, color, i18n, iconFns } = this.props,
       { selected } = this.state
 
     return (
@@ -48,10 +48,9 @@ export default class Anchors extends React.PureComponent {
               }`}
               style={{ color: isSelected ? color : null }}
             >
-              <div
-                className="emoji-mart-anchor-icon"
-                dangerouslySetInnerHTML={{ __html: iconFns.categories[id](24) }}
-              />
+              <div className="emoji-mart-anchor-icon">
+                {iconFns.categories[id]()}
+              </div>
               <span
                 className="emoji-mart-anchor-bar"
                 style={{ backgroundColor: color }}
