@@ -11,6 +11,9 @@ import { PickerPropTypes, PickerDefaultProps } from '../../utils/shared-props'
 
 import { Anchors, Category, Preview, Search } from '..'
 
+import SVGs from '../../svgs'
+
+
 const I18N = {
   search: 'Search',
   notfound: 'No Emoji Found',
@@ -29,6 +32,26 @@ const I18N = {
   },
 }
 
+const toSVG = (size, svg) =>
+`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
+${svg}
+</svg>`
+
+const ICONS = {
+  categories: {
+    search: (size) => toSVG(size, SVGs['search']),
+    recent: 'Frequently Used',
+    people: 'Smileys & People',
+    nature: 'Animals & Nature',
+    foods: 'Food & Drink',
+    activity: 'Activity',
+    places: 'Travel & Places',
+    objects: 'Objects',
+    symbols: 'Symbols',
+    flags: 'Flags',
+    custom: 'Custom',
+  }
+}
 export default class NimblePicker extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -48,6 +71,7 @@ export default class NimblePicker extends React.PureComponent {
 
     this.data = props.data
     this.i18n = deepMerge(I18N, props.i18n)
+    this.icons = deepMerge(ICONS, props.icons)
     this.state = {
       skin: props.skin || store.get('skin') || props.defaultSkin,
       firstRender: true,
