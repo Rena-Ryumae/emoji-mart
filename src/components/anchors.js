@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import SVGs from '../svgs'
-
 export default class Anchors extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -18,29 +16,6 @@ export default class Anchors extends React.PureComponent {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  getSVG(id) {
-    this.SVGs || (this.SVGs = {})
-    var { anchorSVG } = this.props
-
-    if (this.SVGs[id]) {
-      return this.SVGs[id]
-    } else if (anchorSVG[id]) {
-      let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-       ${anchorSVG[id]}
-      </svg>`
-
-      this.SVGs[id] = svg
-      return svg
-    } else {
-      let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-       ${SVGs[id]}
-      </svg>`
-
-      this.SVGs[id] = svg
-      return svg
-    }
-  }
-
   handleClick(e) {
     var index = e.currentTarget.getAttribute('data-index')
     var { categories, onAnchorClick } = this.props
@@ -49,7 +24,7 @@ export default class Anchors extends React.PureComponent {
   }
 
   render() {
-    var { categories, onAnchorClick, color, i18n } = this.props,
+    var { categories, onAnchorClick, color, i18n, iconFns } = this.props,
       { selected } = this.state
 
     return (
@@ -73,7 +48,10 @@ export default class Anchors extends React.PureComponent {
               }`}
               style={{ color: isSelected ? color : null }}
             >
-              <div dangerouslySetInnerHTML={{ __html: this.getSVG(id) }} />
+              <div
+                className="emoji-mart-anchor-icon"
+                dangerouslySetInnerHTML={{ __html: iconFns.categories[id](24) }}
+              />
               <span
                 className="emoji-mart-anchor-bar"
                 style={{ backgroundColor: color }}
@@ -89,11 +67,11 @@ export default class Anchors extends React.PureComponent {
 Anchors.propTypes = {
   categories: PropTypes.array,
   onAnchorClick: PropTypes.func,
-  anchorSVG: PropTypes.object,
+  iconFns: PropTypes.object,
 }
 
 Anchors.defaultProps = {
   categories: [],
   onAnchorClick: () => {},
-  anchorSVG: {},
+  iconFns: {},
 }

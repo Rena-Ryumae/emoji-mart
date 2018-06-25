@@ -3,6 +3,7 @@ import '../../vendor/raf-polyfill'
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import SVGs from '../../svgs'
 import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
@@ -29,6 +30,27 @@ const I18N = {
   },
 }
 
+const toSVG = (size, svg) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
+  ${svg}
+  </svg>`
+
+const ICON_FNS = {
+  categories: {
+    search: (size) => toSVG(size, SVGs['search']),
+    recent: (size) => toSVG(size, SVGs['recent']),
+    people: (size) => toSVG(size, SVGs['people']),
+    nature: (size) => toSVG(size, SVGs['nature']),
+    foods: (size) => toSVG(size, SVGs['foods']),
+    activity: (size) => toSVG(size, SVGs['activity']),
+    places: (size) => toSVG(size, SVGs['places']),
+    objects: (size) => toSVG(size, SVGs['objects']),
+    symbols: (size) => toSVG(size, SVGs['symbols']),
+    flags: (size) => toSVG(size, SVGs['flags']),
+    custom: (size) => toSVG(size, SVGs['custom']),
+  },
+}
+
 export default class NimblePicker extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -48,6 +70,7 @@ export default class NimblePicker extends React.PureComponent {
 
     this.data = props.data
     this.i18n = deepMerge(I18N, props.i18n)
+    this.iconFns = deepMerge(ICON_FNS, props.iconFns)
     this.state = {
       skin: props.skin || store.get('skin') || props.defaultSkin,
       firstRender: true,
@@ -467,7 +490,6 @@ export default class NimblePicker extends React.PureComponent {
         exclude,
         recent,
         autoFocus,
-        anchorSVG,
       } = this.props,
       { skin } = this.state,
       width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
@@ -486,7 +508,7 @@ export default class NimblePicker extends React.PureComponent {
             color={color}
             categories={this.categories}
             onAnchorClick={this.handleAnchorClick}
-            anchorSVG={anchorSVG}
+            iconFns={this.iconFns}
           />
         </div>
 

@@ -50,6 +50,7 @@ import { Picker } from 'emoji-mart'
 | **defaultSkin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
 | **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
+| **iconFns** | | `{}` | [Custom icons](#custom-icons) |
 
 #### I18n
 ```js
@@ -232,6 +233,24 @@ const customEmojis = [
 ]
 
 <Picker custom={customEmojis} />
+```
+
+## Custom icons
+You can provide custom icons which will override the default icons. You can use svg (preferred) or png.
+
+```js
+import { Picker } from 'emoji-mart'
+
+const customIcons = {
+  categories: {
+    recent: (size) =>
+      `<img src='https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7' style="width:${size}px;height:${size}px;"/>`,
+    people: (size) =>
+      `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="13"><g stroke-width="2" stroke="#6c6c6c" fill="none"><path d="M11.29 11.71l-4-4"/><circle cx="5" cy="5" r="4"/></g></svg>`,
+  }
+}
+
+<Picker iconFns={customIcons} />
 ```
 
 ## Headless search
