@@ -32,7 +32,7 @@ const I18N = {
 export default class NimblePicker extends React.PureComponent {
   constructor(props) {
     super(props)
-
+    console.log(props)
     this.RECENT_CATEGORY = { id: 'recent', name: 'Recent', emojis: null }
     this.CUSTOM_CATEGORY = { id: 'custom', name: 'Custom', emojis: [] }
     this.SEARCH_CATEGORY = {
@@ -467,6 +467,7 @@ export default class NimblePicker extends React.PureComponent {
         exclude,
         recent,
         autoFocus,
+        skinIcon
       } = this.props,
       { skin } = this.state,
       width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
@@ -563,6 +564,7 @@ export default class NimblePicker extends React.PureComponent {
               skinsProps={{
                 skin: skin,
                 onChange: this.handleSkinChange,
+                skinIcon: skinIcon
               }}
             />
           </div>

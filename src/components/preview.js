@@ -7,10 +7,42 @@ import { NimbleEmoji, Skins } from '.'
 export default class Preview extends React.PureComponent {
   constructor(props) {
     super(props)
-
+    console.log(props)
     this.data = props.data
     this.state = { emoji: null }
   }
+
+  // createSkinIcon() {
+  //   var { emojiProps, skinsProps } = this.props
+
+  //   if (skinsProps.skinIcon) {
+  //     return (
+  //       <div className="emoji-mart-preview-skins">
+  //         <Skins
+  //           skin={skinsProps.skin}
+  //           onChange={skinsProps.onChange}
+  //           skinIcon=
+  //             {NimbleEmoji({
+  //               emoji: skinsProps.skinIcon,
+  //               data: this.data,
+  //               ...emojiProps,
+  //             })}
+  //         />
+  //       </div>
+  //     )
+  //   }
+
+  //   return (
+  //     <div className="emoji-mart-preview-skins">
+  //       {/* <Skins {...skinsProps} /> */}
+  //       <Skins
+  //         skin={skinsProps.skin}
+  //         onChange={skinsProps.onChange}
+  //         skinIcon={null}
+  //       />
+  //     </div>
+  //   )
+  // }
 
   render() {
     var { emoji } = this.state,
@@ -82,7 +114,13 @@ export default class Preview extends React.PureComponent {
 
           {showSkinTones && (
             <div className="emoji-mart-preview-skins">
-              <Skins {...skinsProps} />
+              <Skins
+                emojiProps={emojiProps}
+                data={this.data}
+                skin={skinsProps.skin}
+                onChange={skinsProps.onChange}
+                skinIcon={skinsProps.skinIcon}
+              />
             </div>
           )}
         </div>

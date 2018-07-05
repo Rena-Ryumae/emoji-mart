@@ -41,7 +41,25 @@ storiesOf('Picker', module)
       showPreview={boolean('Show preview', true)}
       showSkinTones={boolean('Show skin tones', true)}
       custom={CUSTOM_EMOJIS}
-    />
+    />))
+    .add('custom-skin-icon', () => (
+      <Picker
+        onClick={action('clicked')}
+        onSelect={action('selected')}
+        onSkinChange={action('skin changed')}
+        native={boolean('Unicode', true)}
+        set={select('Emoji pack', SETS, SETS[0])}
+        emojiSize={number('Emoji size', 24)}
+        perLine={number('Per line', 9)}
+        title={text('Idle text', 'Your Title Here')}
+        emoji={text('Idle emoji', 'department_store')}
+        defaultSkin={number('Default skin tone', 1)}
+        color={color('Highlight color', '#ae65c5')}
+        showPreview={boolean('Show preview', true)}
+        showSkinTones={boolean('Show skin tones', true)}
+        custom={CUSTOM_EMOJIS}
+        skinIcon={text('Skin Preview Icon', 'v')}
+      />
   ));
 
 storiesOf('Emoji', module)
