@@ -3,6 +3,7 @@ import '../../vendor/raf-polyfill'
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import * as icons from '../../svgs'
 import store from '../../utils/store'
 import frequently from '../../utils/frequently'
 import { deepMerge, measureScrollbar } from '../../utils'
@@ -48,6 +49,7 @@ export default class NimblePicker extends React.PureComponent {
 
     this.data = props.data
     this.i18n = deepMerge(I18N, props.i18n)
+    this.icons = deepMerge(icons, props.icons)
     this.state = {
       skin: props.skin || store.get('skin') || props.defaultSkin,
       firstRender: true,
@@ -467,6 +469,8 @@ export default class NimblePicker extends React.PureComponent {
         exclude,
         recent,
         autoFocus,
+        notFound,
+        notFoundEmoji,
       } = this.props,
       { skin } = this.state,
       width = perLine * (emojiSize + 12) + 12 + 2 + measureScrollbar()
@@ -485,6 +489,7 @@ export default class NimblePicker extends React.PureComponent {
             color={color}
             categories={this.categories}
             onAnchorClick={this.handleAnchorClick}
+            icons={this.icons}
           />
         </div>
 
@@ -539,6 +544,8 @@ export default class NimblePicker extends React.PureComponent {
                   onLeave: this.handleEmojiLeave,
                   onClick: this.handleEmojiClick,
                 }}
+                notFound={notFound}
+                notFoundEmoji={notFoundEmoji}
               />
             )
           })}

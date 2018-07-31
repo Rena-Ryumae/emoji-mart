@@ -50,6 +50,9 @@ import { Picker } from 'emoji-mart'
 | **defaultSkin** | | `1` | Default skin color: `1, 2, 3, 4, 5, 6` |
 | **style** | | | Inline styles applied to the root element. Useful for positioning |
 | **title** | | `Emoji Mart™` | The title shown when no emojis are hovered |
+| **notFoundEmoji** | | `sleuth_or_spy` | The emoji shown when there are no search results |
+| **notFound** | | | [Not Found](#not-found) |
+| **icons** | | `{}` | [Custom icons](#custom-icons) |
 
 #### I18n
 ```js
@@ -158,7 +161,7 @@ import { Emoji } from 'emoji-mart'
 | **onClick** | | | Params: `(emoji, event) => {}` |
 | **onLeave** | | | Params: `(emoji, event) => {}` |
 | **onOver** | | | Params: `(emoji, event) => {}` |
-| [**fallback**](#unsupported-emojis-fallback) | | | Params: `(emoji) => {}` |
+| [**fallback**](#unsupported-emojis-fallback) | | | Params: `(emoji, props) => {}` |
 | **set** | | `apple` | The emoji set: `'apple', 'google', 'twitter', 'emojione'` |
 | **sheetSize** | | `64` | The emoji [sheet size](#sheet-sizes): `16, 20, 32, 64` |
 | **backgroundImageFn** | | ```((set, sheetSize) => `https://unpkg.com/emoji-datasource@3.0.0/sheet_${set}_${sheetSize}.png`)``` | A Fn that returns that image sheet to use for emojis. Useful for avoiding a request if you have the sheet locally. |
@@ -176,8 +179,8 @@ To have the component render `:shrug:` you would need to:
   set={'messenger'}
   emoji={'shrug'}
   size={24}
-  fallback={(emoji) => {
-    return `:${emoji.short_names[0]}:`
+  fallback={(emoji, props) => {
+    return emoji ? `:${emoji.short_names[0]}:` : props.emoji
   }}
 />
 ```
@@ -232,6 +235,34 @@ const customEmojis = [
 ]
 
 <Picker custom={customEmojis} />
+```
+
+## Not Found
+You can provide a custom Not Found object which will allow the appearance of the not found search results to change. In this case, we change the default 'sleuth_or_spy' emoji to Octocat when our search finds no results.
+
+```js
+import { Picker } from 'emoji-mart'
+
+const notFound = () => <img src='https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7' />
+
+<Picker notFound={notFound} />
+```
+
+## Custom icons
+You can provide custom icons which will override the default icons.
+
+```js
+import { Picker } from 'emoji-mart'
+
+const customIcons = {
+  categories: {
+    recent: () => <img src='https://assets-cdn.github.com/images/icons/emoji/octocat.png?v7' />,
+    foods: () => <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0l6.084 24H8L1.916 0zM21 5h-4l-1-4H4l3 12h3l1 4h13L21 5zM6.563 3h7.875l2 8H8.563l-2-8zm8.832 10l-2.856 1.904L12.063 13h3.332zM19 13l-1.5-6h1.938l2 8H16l3-2z"/></svg>,
+    people: () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M3 2l10 6-10 6z"></path></svg>
+  }
+}
+
+<Picker icons={customIcons} />
 ```
 
 ## Headless search
